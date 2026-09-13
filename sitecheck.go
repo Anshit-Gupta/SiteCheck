@@ -13,7 +13,7 @@ import (
 type SiteResults struct {
 	URL        string
 	StatusCode int
-	LatencyMs  time.Duration //sice time.since(startTime) returns this way
+	LatencyMs  time.Duration //since time.since(startTime) returns this way
 	error      string
 }
 
@@ -42,8 +42,19 @@ func main() {
     var wg sync.WaitGroup
 	results := make(chan SiteResults) //create the channel- a pipe carriying ints
 	fmt.Println("Welcome to siteCheck!!!!")
-	urls := []string{"https://anshitgupta.com", "https://instagram.com", "https://lol.com", "https://google.com"}
-	start := time.Now()
+	fmt.Printf("Enter the number of urls you want to check : ")
+	var n int
+	urls := []string{}
+	fmt.Scanln(&n)
+	fmt.Printf("Enter the urls :")
+	var urlinput string
+	for i:=0;i<n;i++{
+       fmt.Scanln(&urlinput)
+	   urls = append(urls, urlinput)
+
+	}
+	
+	start := time.Now() 
 	wg.Add(len(urls))
 	for _, url := range urls {
 		 go checkURL(url , &wg ,results)
